@@ -4,7 +4,7 @@ const nextConfig = {
     GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
   },
   experimental: {
-    serverActions: {},
+    serverActions: true,
   },
   serverRuntimeConfig: {
     GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
