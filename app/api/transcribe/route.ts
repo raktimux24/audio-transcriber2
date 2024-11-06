@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+interface GenerationError extends Error {
+  message: string;
+  name: string;
+  stack?: string;
+}
+
 export async function POST(req: Request) {
   try {
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
@@ -62,7 +68,7 @@ export async function POST(req: Request) {
         transcription,
       });
 
-    } catch (generationError: any) {
+    } catch (generationError: GenerationError) {
       console.error('Generation error:', {
         message: generationError.message,
         name: generationError.name,

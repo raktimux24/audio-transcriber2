@@ -1,6 +1,10 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextResponse } from 'next/server';
 
+interface ApiError extends Error {
+  message: string;
+}
+
 export async function GET() {
   try {
     const apiKey = process.env.GOOGLE_API_KEY;
@@ -32,7 +36,7 @@ export async function GET() {
       }
     });
     
-  } catch (error: any) {
+  } catch (error: ApiError) {
     return NextResponse.json({
       success: false,
       error: error.message,
