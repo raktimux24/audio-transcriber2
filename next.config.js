@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  env: {
-    GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
-  },
-  experimental: {
-    serverActions: true
+  images: {
+    domains: ['avatars.githubusercontent.com'],
+    unoptimized: true
   }
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
