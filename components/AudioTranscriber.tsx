@@ -10,10 +10,6 @@ import { Upload, X, AlertCircle, FileAudio, Check, Wand2 } from 'lucide-react'
 const MAX_FILE_SIZE = 4 * 1024 * 1024 // 4MB
 const ALLOWED_TYPES = ['audio/mp3', 'audio/wav', 'audio/x-m4a', 'audio/mpeg']
 
-interface TranscriptionError extends Error {
-  message: string;
-}
-
 const AudioTranscriber = () => {
   const [audioFile, setAudioFile] = useState<File | null>(null)
   const [transcription, setTranscription] = useState("")
@@ -101,9 +97,9 @@ const AudioTranscriber = () => {
       setProgress(100);
       setTranscription(cleanTranscription);
       showSuccess('Audio transcribed successfully!');
-    } catch (error: TranscriptionError) {
+    } catch (error) {
       console.error('Transcription error:', error);
-      setError(error.message || "An error occurred during transcription. Please try again.");
+      setError(error instanceof Error ? error.message : "An error occurred during transcription. Please try again.");
       setProgress(0);
     } finally {
       setIsProcessing(false);

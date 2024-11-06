@@ -1,12 +1,6 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-interface GenerationError extends Error {
-  message: string;
-  name: string;
-  stack?: string;
-}
-
 export async function POST(req: Request) {
   try {
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
@@ -68,17 +62,17 @@ export async function POST(req: Request) {
         transcription,
       });
 
-    } catch (generationError: GenerationError) {
+    } catch (error) {
       console.error('Generation error:', {
-        message: generationError.message,
-        name: generationError.name,
-        stack: generationError.stack
+        message: error instanceof Error ? error.message : 'Unknown error',
+        name: error instanceof Error ? error.name : 'Unknown',
+        stack: error instanceof Error ? error.stack : undefined
       });
       
       return NextResponse.json({
         error: 'Transcription generation failed',
-        details: generationError.message,
-        stack: process.env.NODE_ENV === 'development' ? generationError.stack : undefined
+        details: error instanceof Error ? error.message : 'Unknown error',
+        stack: process.env.NODE_ENV === 'development' && error instanceof Error ? error.stack : undefined
       }, { status: 500 });
     }
 
