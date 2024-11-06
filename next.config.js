@@ -4,18 +4,8 @@ const nextConfig = {
     GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
   },
   experimental: {
-    serverActions: true,
-  },
-  serverRuntimeConfig: {
-    GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
-  },
-  publicRuntimeConfig: {
-    GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
-  },
-  webpack: (config) => {
-    config.externals = [...config.externals, 'canvas', 'jsdom'];
-    return config;
-  },
+    serverActions: true
+  }
 };
 
-module.exports = nextConfig
+module.exports = nextConfig;
